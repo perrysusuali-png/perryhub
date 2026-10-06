@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI, HTTPException, Request, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -183,7 +184,10 @@ ADMIN_PASSWORD_HASH = password_hash.hash(
 # DATABASE
 # =========================================================
 
-DATABASE = "perryhub.db"
+DATABASE = os.getenv(
+    "PERRYHUB_DATABASE",
+    "perryhub.db"
+)
 
 
 def get_database():
