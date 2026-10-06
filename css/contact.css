@@ -1,0 +1,1076 @@
+/* =========================================================
+   PERRYHUB — CONTACT PAGE
+   WHITE / BLACK / GREEN DESIGN SYSTEM
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+:root {
+    --black: #000000;
+    --black-soft: #111111;
+
+    --white: #ffffff;
+
+    --green: #00ff66;
+    --green-dark: #00cc52;
+
+    --gray: #777777;
+    --light-gray: #aaaaaa;
+
+    --border: #dddddd;
+    --light: #f7f7f7;
+
+    --container: 1200px;
+
+    --transition: 0.25s ease;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--white);
+    color: var(--black);
+
+    line-height: 1.6;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.cyber-nav {
+    width: 100%;
+
+    background: var(--white);
+
+    border-bottom: 1px solid var(--border);
+
+    position: relative;
+    z-index: 100;
+}
+
+
+.nav-container {
+    width: min(
+        92%,
+        var(--container)
+    );
+
+    min-height: 82px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    color: var(--black);
+
+    font-size: 1.4rem;
+    font-weight: 900;
+
+    letter-spacing: -0.05em;
+
+    transition:
+        color var(--transition);
+}
+
+
+.logo span {
+    color: var(--green);
+}
+
+
+.logo:hover {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   NAV LINKS
+   ========================================================= */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+}
+
+
+.nav-links a {
+    position: relative;
+
+    color: var(--black);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition);
+}
+
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+
+.nav-links a.active {
+    color: var(--green);
+}
+
+
+.nav-links a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -9px;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--green);
+}
+
+
+/* =========================================================
+   GENERAL SECTION LABEL
+   ========================================================= */
+
+.section-label {
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color: var(--green);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.contact-hero {
+    min-height: 72vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 110px 0;
+
+    background: var(--black);
+
+    color: var(--white);
+}
+
+
+.contact-hero-inner {
+    width: min(
+        92%,
+        var(--container)
+    );
+
+    margin: 0 auto;
+}
+
+
+.contact-hero h1 {
+    max-width: 900px;
+
+    margin-bottom: 30px;
+
+    font-size:
+        clamp(
+            4rem,
+            10vw,
+            9rem
+        );
+
+    line-height: 0.85;
+
+    letter-spacing: -0.07em;
+
+    font-weight: 900;
+}
+
+
+.contact-hero h1 span {
+    color: var(--green);
+}
+
+
+.contact-hero p {
+    max-width: 650px;
+
+    color: #cccccc;
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CONTACT SECTION
+   ========================================================= */
+
+.contact-section {
+    width: 100%;
+
+    padding: 120px 0;
+
+    background: var(--white);
+
+    color: var(--black);
+}
+
+
+.contact-grid {
+    width: min(
+        92%,
+        var(--container)
+    );
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 100px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CONTACT INFORMATION
+   ========================================================= */
+
+.contact-info {
+    max-width: 520px;
+}
+
+
+.contact-info h2 {
+    margin-bottom: 25px;
+
+    font-size:
+        clamp(
+            2.8rem,
+            5vw,
+            5rem
+        );
+
+    line-height: 0.95;
+
+    letter-spacing: -0.06em;
+
+    font-weight: 900;
+}
+
+
+.contact-info > p {
+    max-width: 500px;
+
+    margin-bottom: 50px;
+
+    color: var(--gray);
+
+    font-size: 0.95rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CONTACT DETAILS
+   ========================================================= */
+
+.contact-details {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.contact-detail {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 22px 0;
+
+    border-top: 1px solid var(--border);
+
+    transition:
+        padding-left var(--transition);
+}
+
+
+.contact-detail:last-child {
+    border-bottom: 1px solid var(--border);
+}
+
+
+.contact-detail:hover {
+    padding-left: 10px;
+}
+
+
+.contact-detail-label {
+    color: var(--gray);
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.contact-detail a {
+    color: var(--black);
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    word-break: break-word;
+
+    transition:
+        color var(--transition);
+}
+
+
+.contact-detail a:hover {
+    color: var(--green-dark);
+}
+
+
+.contact-detail p {
+    color: var(--black);
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CONTACT FORM WRAPPER
+   ========================================================= */
+
+.contact-form-wrapper {
+    width: 100%;
+}
+
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+.contact-form {
+    width: 100%;
+
+    padding: 45px;
+
+    background: var(--black);
+
+    color: var(--white);
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 28px;
+}
+
+
+.form-group:last-of-type {
+    margin-bottom: 30px;
+}
+
+
+.form-group label {
+    margin-bottom: 10px;
+
+    color: var(--white);
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    background: var(--white);
+
+    color: var(--black);
+
+    border: 2px solid transparent;
+
+    outline: none;
+
+    border-radius: 0;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.form-group input {
+    height: 55px;
+}
+
+
+.form-group textarea {
+    min-height: 170px;
+
+    resize: vertical;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #888888;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 1px var(--green);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.contact-submit {
+    width: 100%;
+
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 22px;
+
+    background: var(--green);
+
+    color: var(--black);
+
+    border: 2px solid var(--green);
+
+    cursor: pointer;
+
+    font-size: 0.75rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+
+.contact-submit:hover {
+    background: var(--white);
+
+    border-color: var(--white);
+
+    color: var(--black);
+
+    transform: translateY(-2px);
+}
+
+
+.contact-submit:active {
+    transform: translateY(0);
+}
+
+
+.contact-submit:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   CTA SECTION
+   ========================================================= */
+
+.contact-cta {
+    width: 100%;
+
+    padding: 120px 0;
+
+    background: var(--green);
+
+    color: var(--black);
+}
+
+
+.contact-cta-inner {
+    width: min(
+        92%,
+        1000px
+    );
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+.contact-cta .section-label {
+    color: var(--black);
+}
+
+
+.contact-cta h2 {
+    margin-bottom: 25px;
+
+    font-size:
+        clamp(
+            3rem,
+            7vw,
+            7rem
+        );
+
+    line-height: 0.9;
+
+    letter-spacing: -0.07em;
+
+    font-weight: 900;
+}
+
+
+.contact-cta p {
+    max-width: 650px;
+
+    margin:
+        0 auto 35px;
+
+    color: #111111;
+
+    font-size: 0.9rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CTA BUTTON
+   ========================================================= */
+
+.cta-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 55px;
+
+    padding:
+        0 30px;
+
+    background: var(--black);
+
+    color: var(--white);
+
+    border: 2px solid var(--black);
+
+    font-size: 0.7rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+
+.cta-button:hover {
+    background: var(--white);
+
+    color: var(--black);
+
+    border-color: var(--white);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.small-footer {
+    width: 100%;
+
+    padding: 50px 0;
+
+    background: var(--black);
+
+    color: var(--white);
+}
+
+
+.small-footer-inner {
+    width: min(
+        92%,
+        var(--container)
+    );
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        2fr
+        1fr;
+
+    align-items: center;
+
+    gap: 30px;
+}
+
+
+/* =========================================================
+   FOOTER LOGO
+   ========================================================= */
+
+.small-footer-logo a {
+    color: var(--white);
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+
+    letter-spacing: -0.05em;
+
+    transition:
+        color var(--transition);
+}
+
+
+.small-footer-logo span {
+    color: var(--green);
+}
+
+
+.small-footer-logo a:hover {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
+
+.small-footer-links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+}
+
+
+.small-footer-links a {
+    color: #aaaaaa;
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition);
+}
+
+
+.small-footer-links a:hover {
+    color: var(--green);
+}
+
+
+.small-footer-links a.active {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   FOOTER COPYRIGHT
+   ========================================================= */
+
+.small-footer-inner > p {
+    margin: 0;
+
+    color: #888888;
+
+    font-size: 0.7rem;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .nav-container {
+        gap: 25px;
+    }
+
+
+    .nav-links {
+        gap: 16px;
+    }
+
+
+    .nav-links a {
+        font-size: 0.65rem;
+    }
+
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 70px;
+    }
+
+
+    .contact-info {
+        max-width: 700px;
+    }
+
+
+    .small-footer-inner {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+
+    .small-footer-logo {
+        text-align: center;
+    }
+
+
+    .small-footer-inner > p {
+        text-align: center;
+
+        white-space: normal;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .nav-container {
+        min-height: auto;
+
+        padding:
+            22px 0;
+
+        flex-direction: column;
+
+        gap: 22px;
+    }
+
+
+    .nav-links {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 12px 18px;
+    }
+
+
+    .nav-links a {
+        font-size: 0.62rem;
+    }
+
+
+    .contact-hero {
+        min-height: auto;
+
+        padding:
+            85px 0;
+    }
+
+
+    .contact-hero h1 {
+        font-size:
+            clamp(
+                3.5rem,
+                16vw,
+                6rem
+            );
+    }
+
+
+    .contact-section {
+        padding:
+            80px 0;
+    }
+
+
+    .contact-form {
+        padding:
+            32px 22px;
+    }
+
+
+    .contact-cta {
+        padding:
+            80px 0;
+    }
+
+
+    .contact-cta h2 {
+        font-size:
+            clamp(
+                2.8rem,
+                12vw,
+                5rem
+            );
+    }
+
+
+    .cta-button {
+        width: 100%;
+    }
+
+
+    .small-footer {
+        padding:
+            45px 0;
+    }
+
+
+    .small-footer-links {
+        gap:
+            12px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .nav-links {
+        gap:
+            10px 14px;
+    }
+
+
+    .nav-links a {
+        font-size: 0.58rem;
+    }
+
+
+    .contact-hero {
+        padding:
+            70px 0;
+    }
+
+
+    .contact-hero h1 {
+        font-size:
+            3.2rem;
+    }
+
+
+    .contact-hero p {
+        font-size:
+            0.9rem;
+    }
+
+
+    .contact-section {
+        padding:
+            70px 0;
+    }
+
+
+    .contact-info h2 {
+        font-size:
+            2.7rem;
+    }
+
+
+    .contact-form {
+        padding:
+            25px 18px;
+    }
+
+
+    .form-group input {
+        height:
+            52px;
+    }
+
+
+    .contact-cta {
+        padding:
+            70px 0;
+    }
+
+
+    .contact-cta h2 {
+        font-size:
+            2.8rem;
+    }
+
+
+    .small-footer {
+        padding:
+            40px 0;
+    }
+
+
+    .small-footer-links {
+        gap:
+            10px 14px;
+    }
+
+
+    .small-footer-links a {
+        font-size:
+            0.6rem;
+    }
+
+}

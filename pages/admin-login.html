@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow, noarchive"
+    >
+
+    <meta
+        name="description"
+        content="Secure PerryHub administrator login."
+    >
+
+    <title>Admin Login | PerryHub</title>
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="../public/favicon.svg"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/admin-login.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+            <div class="login-brand">
+
+                <a
+                    href="../index.html"
+                    class="logo"
+                >
+                    PERRY<span>.</span>
+                </a>
+
+                <span class="admin-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+
+            <div class="login-header">
+
+                <span class="section-label">
+                    SECURE ACCESS
+                </span>
+
+                <h1>
+                    Administrator Login
+                </h1>
+
+                <p>
+                    Sign in to access the PerryHub
+                    administrative control center.
+                </p>
+
+            </div>
+
+
+            <form
+                id="adminLoginForm"
+                class="login-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Administrator username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Administrator password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="loginMessage"
+                    class="login-message"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="login-button"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="login-security">
+
+                <span class="security-dot"></span>
+
+                <span>
+                    Protected administrator access
+                </span>
+
+            </div>
+
+
+            <a
+                href="../index.html"
+                class="back-link"
+            >
+                ← Back to PerryHub
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/admin-login.js"></script>
+
+</body>
+
+</html>

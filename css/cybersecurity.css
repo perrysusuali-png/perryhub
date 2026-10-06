@@ -1,0 +1,1494 @@
+
+/* =========================================================
+   PERRYHUB — CYBERSECURITY PAGE
+   Design system based on PerryHub Home
+   Black / White / Green
+========================================================= */
+
+:root {
+    --green: #22c55e;
+    --green-soft: #dcfce7;
+
+    --black: #000000;
+    --text: #111111;
+    --gray: #666666;
+    --light: #f7f7f7;
+    --white: #ffffff;
+
+    --border: #e8e8e8;
+
+    --shadow:
+        0 30px 80px rgba(0, 0, 0, 0.12);
+
+    --container: 1200px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body.cyber-page {
+    background: var(--white);
+    color: var(--black);
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.5;
+}
+
+body.cyber-page a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body.cyber-page button {
+    font: inherit;
+}
+
+.cyber-container {
+    width: min(92%, var(--container));
+    margin: auto;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.cyber-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.cyber-nav-inner {
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cyber-logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+
+    letter-spacing: -0.05em;
+}
+
+.cyber-logo span {
+    color: var(--green);
+}
+
+.cyber-navigation {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.cyber-navigation a {
+    position: relative;
+
+    color: var(--black);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.cyber-navigation a:hover {
+    color: var(--green);
+}
+
+.cyber-navigation a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -8px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--green);
+
+    transition: 0.25s ease;
+}
+
+.cyber-navigation a:hover::after,
+.cyber-navigation .cyber-active::after {
+    width: 100%;
+}
+
+.cyber-navigation .cyber-active {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.cyber-label {
+    color: var(--black);
+
+    font-size: 0.7rem;
+    font-weight: 900;
+
+    letter-spacing: 0.18em;
+}
+
+.cyber-dark-section .cyber-label,
+.cyber-lab-section .cyber-label,
+.cyber-final .cyber-label {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.cyber-btn {
+    min-height: 50px;
+
+    padding: 0 23px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 100px;
+
+    font-size: 0.75rem;
+    font-weight: 900;
+
+    letter-spacing: 0.02em;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.cyber-btn-primary {
+    background: var(--black);
+    color: var(--white);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.cyber-btn-primary:hover {
+    transform: translateY(-4px);
+
+    background: var(--green);
+    color: var(--black);
+}
+
+.cyber-btn-outline {
+    background: transparent;
+    color: var(--black);
+
+    border: 1px solid #d5d5d5;
+}
+
+.cyber-btn-outline:hover {
+    transform: translateY(-4px);
+
+    background: var(--black);
+    color: var(--white);
+
+    border-color: var(--black);
+}
+
+.cyber-dark-section .cyber-btn-outline,
+.cyber-lab-section .cyber-btn-outline,
+.cyber-final .cyber-btn-outline {
+    color: var(--white);
+    border-color: #444;
+}
+
+.cyber-dark-section .cyber-btn-outline:hover,
+.cyber-lab-section .cyber-btn-outline:hover,
+.cyber-final .cyber-btn-outline:hover {
+    background: var(--green);
+    color: var(--black);
+    border-color: var(--green);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.cyber-hero {
+    position: relative;
+
+    min-height: 760px;
+
+    padding: 150px 0 120px;
+
+    overflow: hidden;
+
+    background: var(--white);
+}
+
+.cyber-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -180px;
+    top: 80px;
+
+    border-radius: 50%;
+
+    background: var(--green-soft);
+
+    filter: blur(2px);
+
+    z-index: 0;
+}
+
+.cyber-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    left: -150px;
+    bottom: -150px;
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    border-radius: 50%;
+
+    z-index: 0;
+}
+
+.cyber-hero-text {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 850px;
+}
+
+.cyber-hero-text .cyber-label {
+    margin-bottom: 25px;
+}
+
+.cyber-hero h1 {
+    max-width: 900px;
+
+    margin: 20px 0 30px;
+
+    font-size: clamp(4rem, 8vw, 8rem);
+
+    line-height: 0.86;
+
+    letter-spacing: -0.075em;
+
+    font-weight: 900;
+}
+
+.cyber-hero h1 span {
+    color: var(--green);
+}
+
+.cyber-hero-text > p {
+    max-width: 650px;
+
+    color: var(--gray);
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+}
+
+.cyber-hero-actions {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 35px;
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.cyber-section {
+    position: relative;
+
+    padding: 130px 0;
+
+    background: var(--white);
+}
+
+.cyber-dark-section {
+    background: var(--black);
+
+    color: var(--white);
+}
+
+.cyber-section-number {
+    color: var(--green);
+
+    font-size: 0.7rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+}
+
+
+/* =========================================================
+   INTRODUCTION
+========================================================= */
+
+.cyber-intro {
+    border-top: 1px solid var(--border);
+}
+
+.cyber-intro-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 100px;
+
+    align-items: start;
+}
+
+.cyber-intro-grid h2 {
+    margin-top: 20px;
+
+    font-size: clamp(3rem, 5vw, 5.5rem);
+
+    line-height: 0.9;
+
+    letter-spacing: -0.065em;
+}
+
+.cyber-intro-grid h2 span {
+    color: var(--green);
+}
+
+.cyber-intro-text {
+    max-width: 600px;
+}
+
+.cyber-intro-text p {
+    margin-bottom: 22px;
+
+    color: var(--gray);
+
+    line-height: 1.8;
+}
+
+.cyber-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 30px;
+}
+
+.cyber-tags span {
+    padding: 7px 11px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 50px;
+
+    color: #444;
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.cyber-heading {
+    display: grid;
+
+    grid-template-columns: 70px 1fr;
+
+    gap: 25px;
+
+    align-items: start;
+
+    margin-bottom: 65px;
+}
+
+.cyber-heading h2 {
+    margin-top: 18px;
+
+    font-size: clamp(3rem, 6vw, 5.5rem);
+
+    line-height: 0.9;
+
+    letter-spacing: -0.065em;
+}
+
+.cyber-heading h2 span {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   SECURITY DOMAINS
+========================================================= */
+
+.cyber-domain-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.cyber-domain-card {
+    position: relative;
+
+    min-height: 330px;
+
+    padding: 35px;
+
+    background: #0b0b0b;
+
+    border: 1px solid #222;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.cyber-domain-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -90px;
+    bottom: -90px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    opacity: 0.08;
+
+    transition: 0.4s ease;
+}
+
+.cyber-domain-card:hover {
+    transform:
+        translateY(-10px)
+        rotateX(2deg)
+        rotateY(-2deg);
+
+    border-color: rgba(34, 197, 94, 0.5);
+
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.35);
+}
+
+.cyber-domain-card:hover::after {
+    transform: scale(1.5);
+
+    opacity: 0.15;
+}
+
+.cyber-card-number {
+    position: absolute;
+
+    top: 25px;
+    right: 25px;
+
+    color: #555;
+
+    font-size: 0.65rem;
+
+    font-weight: 900;
+}
+
+.cyber-card-icon {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom: 30px;
+
+    background: var(--green);
+
+    color: var(--black);
+
+    border-radius: 13px;
+
+    font-size: 0.75rem;
+
+    font-weight: 900;
+}
+
+.cyber-domain-card h3 {
+    margin-bottom: 13px;
+
+    font-size: 1.25rem;
+
+    letter-spacing: -0.02em;
+}
+
+.cyber-domain-card p {
+    color: #888;
+
+    font-size: 0.85rem;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   SECURITY TOOLS
+========================================================= */
+
+.cyber-tools-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.cyber-tool {
+    position: relative;
+
+    min-height: 150px;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    transition: 0.35s ease;
+
+    overflow: hidden;
+}
+
+.cyber-tool::before {
+    content: "";
+
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    right: -40px;
+    bottom: -40px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    opacity: 0.1;
+}
+
+.cyber-tool:hover {
+    transform: translateY(-8px);
+
+    border-color: var(--green);
+
+    box-shadow:
+        15px 25px 50px rgba(0, 0, 0, 0.08);
+}
+
+.cyber-tool strong {
+    font-size: 1.1rem;
+
+    letter-spacing: -0.02em;
+}
+
+.cyber-tool span {
+    color: #888;
+
+    font-size: 0.62rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   PERRY CYBER LAB
+========================================================= */
+
+.cyber-lab-section {
+    background: #050505;
+
+    color: var(--white);
+
+    overflow: hidden;
+}
+
+.cyber-lab-section::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -200px;
+    top: -200px;
+
+    border: 1px solid rgba(34, 197, 94, 0.18);
+
+    border-radius: 50%;
+}
+
+.cyber-lab-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 100px;
+
+    align-items: center;
+}
+
+.cyber-lab-copy {
+    max-width: 600px;
+}
+
+.cyber-lab-copy h2 {
+    margin: 25px 0;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+
+    line-height: 0.88;
+
+    letter-spacing: -0.07em;
+}
+
+.cyber-lab-copy h2 span {
+    color: var(--green);
+}
+
+.cyber-lab-copy p {
+    max-width: 550px;
+
+    margin-bottom: 30px;
+
+    color: #888;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CYBER RADAR
+========================================================= */
+
+.cyber-lab-visual {
+    position: relative;
+
+    min-height: 500px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    perspective: 1000px;
+}
+
+.cyber-radar {
+    position: relative;
+
+    width: 350px;
+    height: 350px;
+
+    border: 1px solid rgba(34, 197, 94, 0.35);
+
+    border-radius: 50%;
+
+    transform:
+        rotateX(58deg)
+        rotateZ(-15deg);
+
+    box-shadow:
+        0 0 80px rgba(34, 197, 94, 0.08);
+
+    animation:
+        radar-float 5s ease-in-out infinite;
+}
+
+.cyber-radar-ring {
+    position: absolute;
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    border-radius: 50%;
+}
+
+.ring-one {
+    inset: 18%;
+}
+
+.ring-two {
+    inset: 36%;
+}
+
+.ring-three {
+    inset: 50%;
+}
+
+.cyber-radar-cross {
+    position: absolute;
+
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.cyber-radar-cross.horizontal {
+    left: 0;
+    right: 0;
+
+    top: 50%;
+
+    height: 1px;
+}
+
+.cyber-radar-cross.vertical {
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+
+    width: 1px;
+}
+
+.cyber-radar-point {
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    background: var(--green);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 20px rgba(34, 197, 94, 0.7);
+}
+
+.point-one {
+    top: 25%;
+    left: 67%;
+}
+
+.point-two {
+    top: 62%;
+    left: 28%;
+}
+
+.point-three {
+    top: 70%;
+    left: 73%;
+}
+
+.cyber-radar-center {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 18px;
+    height: 18px;
+
+    background: var(--green);
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+@keyframes radar-float {
+    0%,
+    100% {
+        transform:
+            rotateX(58deg)
+            rotateZ(-15deg)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotateX(58deg)
+            rotateZ(-15deg)
+            translateY(-12px);
+    }
+}
+
+.cyber-lab-label {
+    position: absolute;
+
+    left: 50%;
+    bottom: 30px;
+
+    transform: translateX(-50%);
+
+    width: 260px;
+
+    padding: 15px 20px;
+
+    background: rgba(0, 0, 0, 0.8);
+
+    border: 1px solid #222;
+
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+.cyber-lab-label span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #666;
+
+    font-size: 0.6rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+.cyber-lab-label strong {
+    color: var(--green);
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   LEARNING PATH
+========================================================= */
+
+.cyber-path {
+    position: relative;
+
+    max-width: 900px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cyber-path::before {
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+    top: 0;
+    bottom: 0;
+
+    width: 1px;
+
+    background: #333;
+}
+
+.cyber-path-item {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 50px 1fr;
+
+    gap: 25px;
+
+    padding: 25px 0;
+
+    border-bottom: 1px solid #1d1d1d;
+}
+
+.cyber-path-item:last-child {
+    border-bottom: none;
+}
+
+.cyber-path-item > span {
+    position: relative;
+
+    z-index: 2;
+
+    width: 50px;
+    height: 50px;
+
+    display: grid;
+
+    place-items: center;
+
+    background: var(--green);
+
+    color: var(--black);
+
+    border-radius: 50%;
+
+    font-size: 0.7rem;
+
+    font-weight: 900;
+}
+
+.cyber-path-item h3 {
+    margin-top: 5px;
+
+    margin-bottom: 8px;
+
+    font-size: 1.2rem;
+}
+
+.cyber-path-item p {
+    max-width: 650px;
+
+    color: #888;
+
+    font-size: 0.85rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.cyber-final {
+    position: relative;
+
+    padding: 130px 0;
+
+    background: var(--white);
+
+    overflow: hidden;
+}
+
+.cyber-final::before {
+    content: "";
+
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    right: -150px;
+    top: -150px;
+
+    border: 1px solid rgba(34, 197, 94, 0.3);
+
+    border-radius: 50%;
+}
+
+.cyber-final::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -90px;
+    bottom: -100px;
+
+    background: var(--green);
+
+    border-radius: 50%;
+
+    opacity: 0.8;
+}
+
+.cyber-final-inner {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 850px;
+
+    padding: 70px;
+
+    background: var(--black);
+
+    color: var(--white);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 35px 80px rgba(0, 0, 0, 0.15);
+}
+
+.cyber-final-inner h2 {
+    margin: 22px 0;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+
+    line-height: 0.88;
+
+    letter-spacing: -0.07em;
+}
+
+.cyber-final-inner h2 span {
+    color: var(--green);
+}
+
+.cyber-final-inner p {
+    max-width: 550px;
+
+    margin-bottom: 30px;
+
+    color: #888;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+   MATCHES PERRYHUB HOME FOOTER SIZE
+========================================================= */
+
+.small-footer {
+    width: 100%;
+
+    padding: 50px 0;
+
+    background: var(--black);
+
+    color: var(--white);
+}
+
+.small-footer-inner {
+    width: min(92%, var(--container));
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   FOOTER LOGO
+========================================================= */
+
+.small-footer-logo {
+    color: var(--white);
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+
+    letter-spacing: -0.05em;
+
+    white-space: nowrap;
+
+    transition: 0.25s ease;
+}
+
+.small-footer-logo span {
+    color: var(--green);
+}
+
+.small-footer-logo:hover {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.small-footer-links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 25px;
+}
+
+.small-footer-links a {
+    color: #aaa;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.small-footer-links a:hover {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   FOOTER COPYRIGHT
+========================================================= */
+
+.small-footer-inner p {
+    margin: 0;
+
+    color: #888;
+
+    font-size: 0.75rem;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   FOOTER — TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .small-footer-inner {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        text-align: center;
+    }
+
+    .small-footer-logo {
+        text-align: center;
+    }
+
+    .small-footer-links {
+        justify-content: center;
+    }
+
+    .small-footer-inner p {
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   FOOTER — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .small-footer {
+        padding: 45px 0;
+    }
+
+    .small-footer-inner {
+        gap: 22px;
+    }
+
+    .small-footer-logo {
+        font-size: 1.25rem;
+    }
+
+    .small-footer-links {
+        flex-wrap: wrap;
+
+        gap: 12px 18px;
+    }
+
+    .small-footer-links a {
+        font-size: 0.7rem;
+    }
+
+    .small-footer-inner p {
+        font-size: 0.65rem;
+    }
+
+}
+
+
+/* =========================================================
+   FOOTER — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .small-footer {
+        padding: 40px 0;
+    }
+
+    .small-footer-links {
+        gap: 10px 15px;
+    }
+
+    .small-footer-links a {
+        font-size: 0.65rem;
+    }
+
+    .small-footer-inner p {
+        font-size: 0.6rem;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .cyber-navigation {
+        gap: 20px;
+    }
+
+    .cyber-hero {
+        min-height: auto;
+
+        padding: 120px 0 100px;
+    }
+
+    .cyber-hero h1 {
+        font-size: clamp(4rem, 10vw, 6rem);
+    }
+
+    .cyber-intro-grid,
+    .cyber-lab-grid {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+    }
+
+    .cyber-domain-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cyber-tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cyber-lab-visual {
+        min-height: 450px;
+    }
+
+    .cyber-final-inner {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .cyber-nav-inner {
+        height: 70px;
+    }
+
+    .cyber-navigation {
+        display: none;
+    }
+
+    .cyber-hero {
+        padding: 90px 0 80px;
+    }
+
+    .cyber-hero h1 {
+        font-size: 3.5rem;
+
+        line-height: 0.9;
+    }
+
+    .cyber-hero-text > p {
+        font-size: 0.9rem;
+    }
+
+    .cyber-hero-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .cyber-btn {
+        width: 100%;
+    }
+
+    .cyber-section {
+        padding: 85px 0;
+    }
+
+    .cyber-intro-grid h2 {
+        font-size: 3.2rem;
+    }
+
+    .cyber-heading {
+        grid-template-columns: 45px 1fr;
+
+        gap: 15px;
+
+        margin-bottom: 45px;
+    }
+
+    .cyber-heading h2 {
+        font-size: 3rem;
+    }
+
+    .cyber-domain-grid,
+    .cyber-tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cyber-domain-card {
+        min-height: 300px;
+    }
+
+    .cyber-lab-copy h2 {
+        font-size: 3.5rem;
+    }
+
+    .cyber-radar {
+        width: 280px;
+        height: 280px;
+    }
+
+    .cyber-lab-label {
+        bottom: 10px;
+    }
+
+    .cyber-path-item {
+        grid-template-columns: 45px 1fr;
+
+        gap: 18px;
+    }
+
+    .cyber-path-item > span {
+        width: 45px;
+        height: 45px;
+    }
+
+    .cyber-path::before {
+        left: 22px;
+    }
+
+    .cyber-final {
+        padding: 80px 0;
+    }
+
+    .cyber-final-inner {
+        padding: 45px 28px;
+    }
+
+    .cyber-final-inner h2 {
+        font-size: 3.5rem;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .cyber-hero h1 {
+        font-size: 2.9rem;
+    }
+
+    .cyber-intro-grid h2 {
+        font-size: 2.7rem;
+    }
+
+    .cyber-heading h2 {
+        font-size: 2.6rem;
+    }
+
+    .cyber-lab-copy h2 {
+        font-size: 3rem;
+    }
+
+    .cyber-radar {
+        width: 240px;
+        height: 240px;
+    }
+
+    .cyber-final-inner h2 {
+        font-size: 3rem;
+    }
+
+    .cyber-tags span {
+        font-size: 0.58rem;
+    }
+}

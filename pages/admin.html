@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="PerryHub secure administrator dashboard."
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow, noarchive"
+    >
+
+    <title>Admin | PerryHub</title>
+
+
+    <!-- FAVICON -->
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="../public/favicon.svg"
+    >
+
+
+    <!-- ADMIN CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         ADMIN HEADER
+    ====================================================== -->
+
+    <header class="admin-nav">
+
+        <div class="admin-nav-inner">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="../index.html"
+                class="admin-logo"
+            >
+                PERRY<span>.</span>
+            </a>
+
+
+            <!-- PAGE TITLE -->
+
+            <div class="admin-title">
+                ADMIN CONTROL
+            </div>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="admin-header-actions">
+
+                <span
+                    id="adminConnectionStatus"
+                    class="connection-status"
+                >
+                    Checking...
+                </span>
+
+
+                <button
+                    id="logoutButton"
+                    class="logout-button"
+                    type="button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         ADMIN LAYOUT
+    ====================================================== -->
+
+    <div class="admin-layout">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="admin-sidebar">
+
+
+            <nav
+                class="admin-sidebar-nav"
+                aria-label="Administrator navigation"
+            >
+
+                <a
+                    href="#overview"
+                    class="admin-sidebar-link active"
+                >
+                    <span class="sidebar-icon">
+                        ◈
+                    </span>
+
+                    Overview
+                </a>
+
+
+                <a
+                    href="#messages"
+                    class="admin-sidebar-link"
+                >
+                    <span class="sidebar-icon">
+                        ✉
+                    </span>
+
+                    Messages
+
+                    <span
+                        id="sidebarMessageCount"
+                        class="sidebar-badge"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#security"
+                    class="admin-sidebar-link"
+                >
+                    <span class="sidebar-icon">
+                        ◉
+                    </span>
+
+                    Security
+                </a>
+
+
+                <a
+                    href="#controls"
+                    class="admin-sidebar-link"
+                >
+                    <span class="sidebar-icon">
+                        ⚙
+                    </span>
+
+                    Site Controls
+                </a>
+
+
+                <a
+                    href="#activity"
+                    class="admin-sidebar-link"
+                >
+                    <span class="sidebar-icon">
+                        ≡
+                    </span>
+
+                    Activity
+                </a>
+
+            </nav>
+
+
+            <!-- SIDEBAR FOOTER -->
+
+            <div class="sidebar-footer">
+
+                <a href="../index.html">
+                    ← Back to website
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN DASHBOARD
+        ================================================== -->
+
+        <main class="admin-main">
+
+
+            <!-- =================================================
+                 OVERVIEW
+            ================================================== -->
+
+            <section
+                id="overview"
+                class="dashboard-section"
+            >
+
+                <div class="dashboard-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            PERRYHUB
+                        </span>
+
+                        <h1>
+                            Control Center
+                        </h1>
+
+                    </div>
+
+
+                    <button
+                        id="refreshDashboard"
+                        class="refresh-button"
+                        type="button"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <!-- STAT CARDS -->
+
+                <div class="dashboard-stats">
+
+
+                    <!-- MESSAGES -->
+
+                    <article class="dashboard-stat">
+
+                        <div class="stat-icon">
+                            ✉
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Messages
+                            </span>
+
+                            <strong id="messageCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- API -->
+
+                    <article class="dashboard-stat">
+
+                        <div class="stat-icon">
+                            API
+                        </div>
+
+                        <div>
+
+                            <span>
+                                API Status
+                            </span>
+
+                            <strong id="apiStatus">
+                                Checking
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- AUTH -->
+
+                    <article class="dashboard-stat">
+
+                        <div class="stat-icon">
+                            AUTH
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Authentication
+                            </span>
+
+                            <strong id="authStatus">
+                                Checking
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- SECURITY -->
+
+                    <article class="dashboard-stat">
+
+                        <div class="stat-icon">
+                            SEC
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Security
+                            </span>
+
+                            <strong id="securityStatus">
+                                Checking
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SECURITY
+            ================================================== -->
+
+            <section
+                id="security"
+                class="dashboard-section"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            SECURITY
+                        </span>
+
+                        <h2>
+                            Security Monitor
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-grid">
+
+
+                    <!-- AUTHENTICATION -->
+
+                    <article class="security-card">
+
+                        <div class="security-card-header">
+
+                            <div class="security-card-icon">
+                                AUTH
+                            </div>
+
+                            <span
+                                id="authenticationIndicator"
+                                class="security-status"
+                            >
+                                Checking
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Authentication
+                        </h3>
+
+                        <p>
+                            Administrator authentication
+                            protects sensitive dashboard operations.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- RATE LIMIT -->
+
+                    <article class="security-card">
+
+                        <div class="security-card-header">
+
+                            <div class="security-card-icon">
+                                RATE
+                            </div>
+
+                            <span
+                                id="rateLimitIndicator"
+                                class="security-status"
+                            >
+                                Checking
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Rate Limiting
+                        </h3>
+
+                        <p>
+                            Limits excessive requests to
+                            reduce automated abuse.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- CORS -->
+
+                    <article class="security-card">
+
+                        <div class="security-card-header">
+
+                            <div class="security-card-icon">
+                                CORS
+                            </div>
+
+                            <span
+                                id="corsIndicator"
+                                class="security-status"
+                            >
+                                Checking
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            CORS
+                        </h3>
+
+                        <p>
+                            Controls which origins are allowed
+                            to communicate with the API.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- HEADERS -->
+
+                    <article class="security-card">
+
+                        <div class="security-card-header">
+
+                            <div class="security-card-icon">
+                                HTTP
+                            </div>
+
+                            <span
+                                id="headersIndicator"
+                                class="security-status"
+                            >
+                                Checking
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Security Headers
+                        </h3>
+
+                        <p>
+                            Browser security policies help
+                            reduce common web attacks.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 WEBSITE CONTROLS
+            ================================================== -->
+
+            <section
+                id="controls"
+                class="dashboard-section"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            CONTROL
+                        </span>
+
+                        <h2>
+                            Website Controls
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="control-list">
+
+
+                    <!-- CONTACT FORM -->
+
+                    <div class="control-row">
+
+                        <div class="control-information">
+
+                            <div class="control-icon">
+                                ✉
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Contact Form
+                                </h3>
+
+                                <p>
+                                    Allow visitors to submit
+                                    contact messages.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="contactFormControl"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- MAINTENANCE -->
+
+                    <div class="control-row">
+
+                        <div class="control-information">
+
+                            <div class="control-icon">
+                                ⚙
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Maintenance Mode
+                                </h3>
+
+                                <p>
+                                    Temporarily restrict public
+                                    website access.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="maintenanceModeControl"
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- API -->
+
+                    <div class="control-row">
+
+                        <div class="control-information">
+
+                            <div class="control-icon">
+                                API
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    API Access
+                                </h3>
+
+                                <p>
+                                    Control non-sensitive public
+                                    API functionality.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="publicApiControl"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- ENHANCED SECURITY -->
+
+                    <div class="control-row">
+
+                        <div class="control-information">
+
+                            <div class="control-icon">
+                                SEC
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Enhanced Security
+                                </h3>
+
+                                <p>
+                                    Enable stricter security
+                                    policies for administration.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="enhancedSecurityControl"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MESSAGES
+            ================================================== -->
+
+            <section
+                id="messages"
+                class="dashboard-section"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            INBOX
+                        </span>
+
+                        <h2>
+                            Messages
+                        </h2>
+
+                    </div>
+
+
+                    <span
+                        id="messageStatus"
+                        class="section-status"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="messagesContainer"
+                    class="messages-container"
+                >
+
+                    <!-- Messages loaded by admin.js -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SECURITY ACTIVITY
+            ================================================== -->
+
+            <section
+                id="activity"
+                class="dashboard-section"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            AUDIT LOG
+                        </span>
+
+                        <h2>
+                            Security Activity
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="securityLogs"
+                    class="activity-list"
+                >
+
+
+                    <!-- LOGIN -->
+
+                    <div class="activity-item">
+
+                        <div class="activity-indicator success">
+                            ✓
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Dashboard initialized
+                            </strong>
+
+                            <span>
+                                Administrative monitoring started.
+                            </span>
+
+                        </div>
+
+                        <time>
+                            Now
+                        </time>
+
+                    </div>
+
+
+
+                    <!-- API -->
+
+                    <div class="activity-item">
+
+                        <div class="activity-indicator success">
+                            ✓
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                API connection checked
+                            </strong>
+
+                            <span>
+                                PerryHub API health check executed.
+                            </span>
+
+                        </div>
+
+                        <time>
+                            Now
+                        </time>
+
+                    </div>
+
+
+
+                    <!-- SECURITY -->
+
+                    <div class="activity-item">
+
+                        <div class="activity-indicator warning">
+                            !
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Security monitoring enabled
+                            </strong>
+
+                            <span>
+                                Administrative security controls loaded.
+                            </span>
+
+                        </div>
+
+                        <time>
+                            Now
+                        </time>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ADMIN ACTIONS
+            ================================================== -->
+
+            <section class="dashboard-section admin-actions-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            ADMINISTRATION
+                        </span>
+
+                        <h2>
+                            Administrative Actions
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-actions">
+
+
+                    <button
+                        id="logoutAllSessions"
+                        class="admin-action-button"
+                        type="button"
+                    >
+                        Revoke All Sessions
+                    </button>
+
+
+                    <button
+                        id="clearSecurityLogs"
+                        class="admin-action-button secondary"
+                        type="button"
+                    >
+                        Clear Activity
+                    </button>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <footer class="admin-footer">
+
+                <span>
+                    PerryHub Admin
+                </span>
+
+                <span>
+                    Secure Administration
+                </span>
+
+                <span>
+                    © 2026
+                </span>
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ADMIN JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/admin.js"></script>
+
+
+</body>
+
+</html>
