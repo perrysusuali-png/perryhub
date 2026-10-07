@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, HTTPException, Request, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,6 +15,9 @@ from datetime import datetime, timedelta, timezone
 import sqlite3
 import secrets
 import os
+
+import psycopg
+from psycopg.rows import dict_row
 
 
 # =========================================================
@@ -37,23 +39,82 @@ SECRET_KEY = os.getenv(
     "PERRYHUB_SECRET_KEY"
 )
 
+DATABASE_URL = os.getenv(
+    "DATABASE_URL"
+)
+
+DATABASE = os.getenv(
+    "PERRYHUB_DATABASE",
+    "perryhub.db"
+)
+
+FRONTEND_URL = os.getenv(
+    "PERRYHUB_FRONTEND_URL"
+)
+
+COOKIE_SECURE = os.getenv(
+    "PERRYHUB_COOKIE_SECURE",
+    "false"
+).lower() == "true"
+
+COOKIE_SAMESITE = os.getenv(
+    "PERRYHUB_COOKIE_SAMESITE",
+    "lax"
+).lower()
+
+
+# =========================================================
+# ENVIRONMENT VALIDATION
+# =========================================================
 
 if not ADMIN_USERNAME:
+
     raise RuntimeError(
         "PERRYHUB_ADMIN_USERNAME is missing from .env"
     )
 
 
 if not ADMIN_PASSWORD:
+
     raise RuntimeError(
         "PERRYHUB_ADMIN_PASSWORD is missing from .env"
     )
 
 
 if not SECRET_KEY:
+
     raise RuntimeError(
         "PERRYHUB_SECRET_KEY is missing from .env"
     )
+
+
+if COOKIE_SAMESITE not in {
+    "lax",
+    "strict",
+    "none"
+}:
+
+    raise RuntimeError(
+        "PERRYHUB_COOKIE_SAMESITE must be "
+        "'lax', 'strict', or 'none'."
+    )
+
+
+if COOKIE_SAMESITE == "none" and not COOKIE_SECURE:
+
+    raise RuntimeError(
+        "PERRYHUB_COOKIE_SAMESITE='none' requires "
+        "PERRYHUB_COOKIE_SECURE='true'."
+    )
+
+
+# =========================================================
+# DATABASE MODE
+# =========================================================
+
+USING_POSTGRESQL = bool(
+    DATABASE_URL
+)
 
 
 # =========================================================
@@ -90,13 +151,27 @@ app.add_exception_handler(
 # CORS
 # =========================================================
 
+cors_origins = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+]
+
+
+if FRONTEND_URL:
+
+    FRONTEND_URL = FRONTEND_URL.rstrip("/")
+
+    if FRONTEND_URL not in cors_origins:
+
+        cors_origins.append(
+            FRONTEND_URL
+        )
+
+
 app.add_middleware(
     CORSMiddleware,
 
-    allow_origins=[
-        "http://127.0.0.1:5500",
-        "http://localhost:5500"
-    ],
+    allow_origins=cors_origins,
 
     allow_credentials=True,
 
@@ -181,16 +256,26 @@ ADMIN_PASSWORD_HASH = password_hash.hash(
 
 
 # =========================================================
-# DATABASE
+# DATABASE HELPERS
 # =========================================================
 
-DATABASE = os.getenv(
-    "PERRYHUB_DATABASE",
-    "perryhub.db"
-)
-
-
 def get_database():
+
+    # -----------------------------------------------------
+    # Production: PostgreSQL / Supabase
+    # -----------------------------------------------------
+
+    if USING_POSTGRESQL:
+
+        return psycopg.connect(
+            DATABASE_URL,
+            row_factory=dict_row
+        )
+
+
+    # -----------------------------------------------------
+    # Local development: SQLite
+    # -----------------------------------------------------
 
     connection = sqlite3.connect(
         DATABASE
@@ -201,6 +286,47 @@ def get_database():
     return connection
 
 
+def execute_query(
+    cursor,
+    query,
+    params=()
+):
+    """
+    Execute a parameterized query using syntax compatible
+    with both SQLite and PostgreSQL.
+
+    SQLite uses:
+        ?
+
+    PostgreSQL uses:
+        %s
+    """
+
+    if USING_POSTGRESQL:
+
+        query = query.replace(
+            "?",
+            "%s"
+        )
+
+
+    if params:
+
+        return cursor.execute(
+            query,
+            params
+        )
+
+
+    return cursor.execute(
+        query
+    )
+
+
+# =========================================================
+# DATABASE INITIALIZATION
+# =========================================================
+
 def initialize_database():
 
     connection = get_database()
@@ -208,71 +334,150 @@ def initialize_database():
     cursor = connection.cursor()
 
 
-    # -----------------------------------------------------
-    # Messages
-    # -----------------------------------------------------
+    # =====================================================
+    # POSTGRESQL
+    # =====================================================
 
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS messages (
+    if USING_POSTGRESQL:
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+        # -------------------------------------------------
+        # Messages
+        # -------------------------------------------------
 
-            name TEXT NOT NULL,
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS messages (
 
-            email TEXT NOT NULL,
+                id SERIAL PRIMARY KEY,
 
-            subject TEXT NOT NULL,
+                name TEXT NOT NULL,
 
-            message TEXT NOT NULL,
+                email TEXT NOT NULL,
 
-            created_at TEXT NOT NULL
+                subject TEXT NOT NULL,
 
+                message TEXT NOT NULL,
+
+                created_at TEXT NOT NULL
+
+            )
+            """
         )
-        """
-    )
 
 
-    # -----------------------------------------------------
-    # Audit logs
-    # -----------------------------------------------------
+        # -------------------------------------------------
+        # Audit logs
+        # -------------------------------------------------
 
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS audit_logs (
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS audit_logs (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
 
-            event TEXT NOT NULL,
+                event TEXT NOT NULL,
 
-            details TEXT,
+                details TEXT,
 
-            created_at TEXT NOT NULL
+                created_at TEXT NOT NULL
 
+            )
+            """
         )
-        """
-    )
 
 
-    # -----------------------------------------------------
-    # Admin sessions
-    # -----------------------------------------------------
+        # -------------------------------------------------
+        # Admin sessions
+        # -------------------------------------------------
 
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS admin_sessions (
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS admin_sessions (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
 
-            session_id TEXT NOT NULL UNIQUE,
+                session_id TEXT NOT NULL UNIQUE,
 
-            expires_at TEXT NOT NULL,
+                expires_at TEXT NOT NULL,
 
-            created_at TEXT NOT NULL
+                created_at TEXT NOT NULL
 
+            )
+            """
         )
-        """
-    )
+
+
+    # =====================================================
+    # SQLITE
+    # =====================================================
+
+    else:
+
+        # -------------------------------------------------
+        # Messages
+        # -------------------------------------------------
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS messages (
+
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                name TEXT NOT NULL,
+
+                email TEXT NOT NULL,
+
+                subject TEXT NOT NULL,
+
+                message TEXT NOT NULL,
+
+                created_at TEXT NOT NULL
+
+            )
+            """
+        )
+
+
+        # -------------------------------------------------
+        # Audit logs
+        # -------------------------------------------------
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS audit_logs (
+
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                event TEXT NOT NULL,
+
+                details TEXT,
+
+                created_at TEXT NOT NULL
+
+            )
+            """
+        )
+
+
+        # -------------------------------------------------
+        # Admin sessions
+        # -------------------------------------------------
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS admin_sessions (
+
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                session_id TEXT NOT NULL UNIQUE,
+
+                expires_at TEXT NOT NULL,
+
+                created_at TEXT NOT NULL
+
+            )
+            """
+        )
 
 
     connection.commit()
@@ -308,12 +513,15 @@ def cleanup_expired_sessions():
     ).isoformat()
 
 
-    cursor.execute(
+    execute_query(
+        cursor,
+
         """
         DELETE FROM admin_sessions
 
         WHERE expires_at <= ?
         """,
+
         (
             now,
         )
@@ -361,7 +569,9 @@ def create_session():
     cursor = connection.cursor()
 
 
-    cursor.execute(
+    execute_query(
+        cursor,
+
         """
         INSERT INTO admin_sessions
         (
@@ -372,6 +582,7 @@ def create_session():
 
         VALUES (?, ?, ?)
         """,
+
         (
             session_id,
             expires_at.isoformat(),
@@ -411,7 +622,9 @@ def get_session(
     cursor = connection.cursor()
 
 
-    cursor.execute(
+    execute_query(
+        cursor,
+
         """
         SELECT
             session_id,
@@ -422,6 +635,7 @@ def get_session(
 
         WHERE session_id = ?
         """,
+
         (
             session_id,
         )
@@ -450,12 +664,15 @@ def get_session(
 
     if now >= expires_at:
 
-        cursor.execute(
+        execute_query(
+            cursor,
+
             """
             DELETE FROM admin_sessions
 
             WHERE session_id = ?
             """,
+
             (
                 session_id,
             )
@@ -524,7 +741,9 @@ def create_audit_log(
     cursor = connection.cursor()
 
 
-    cursor.execute(
+    execute_query(
+        cursor,
+
         """
         INSERT INTO audit_logs
         (
@@ -535,6 +754,7 @@ def create_audit_log(
 
         VALUES (?, ?, ?)
         """,
+
         (
             event,
             details,
@@ -616,6 +836,11 @@ def health():
 
         "service":
             "PerryHub API",
+
+        "database":
+            "postgresql"
+            if USING_POSTGRESQL
+            else "sqlite",
 
         "timestamp":
             datetime.now(
@@ -699,9 +924,9 @@ def admin_login(
 
         httponly=True,
 
-        secure=False,
+        secure=COOKIE_SECURE,
 
-        samesite="lax",
+        samesite=COOKIE_SAMESITE,
 
         max_age=int(
             SESSION_DURATION.total_seconds()
@@ -850,12 +1075,15 @@ def admin_logout(
         cursor = connection.cursor()
 
 
-        cursor.execute(
+        execute_query(
+            cursor,
+
             """
             DELETE FROM admin_sessions
 
             WHERE session_id = ?
             """,
+
             (
                 session_id,
             )
@@ -1088,34 +1316,71 @@ def contact(
     ).isoformat()
 
 
-    cursor.execute(
-        """
-        INSERT INTO messages
-        (
-            name,
-            email,
-            subject,
-            message,
-            created_at
+    if USING_POSTGRESQL:
+
+        cursor.execute(
+            """
+            INSERT INTO messages
+            (
+                name,
+                email,
+                subject,
+                message,
+                created_at
+            )
+
+            VALUES (%s, %s, %s, %s, %s)
+
+            RETURNING id
+            """,
+
+            (
+                name,
+                email,
+                subject,
+                message_text,
+                created_at
+            )
         )
 
-        VALUES (?, ?, ?, ?, ?)
-        """,
-        (
-            name,
-            email,
-            subject,
-            message_text,
-            created_at
+        inserted_row = cursor.fetchone()
+
+        message_id = inserted_row["id"]
+
+
+    else:
+
+        cursor.execute(
+            """
+            INSERT INTO messages
+            (
+                name,
+                email,
+                subject,
+                message,
+                created_at
+            )
+
+            VALUES (?, ?, ?, ?, ?)
+
+            RETURNING id
+            """,
+
+            (
+                name,
+                email,
+                subject,
+                message_text,
+                created_at
+            )
         )
-    )
+
+        inserted_row = cursor.fetchone()
+
+        message_id = inserted_row["id"]
 
 
     connection.commit()
-
-
-    message_id = cursor.lastrowid
-
 
     connection.close()
 
@@ -1126,7 +1391,10 @@ def contact(
 
     create_audit_log(
         "CONTACT_MESSAGE",
-        f"New contact message received. Message ID: {message_id}"
+        (
+            "New contact message received. "
+            f"Message ID: {message_id}"
+        )
     )
 
 

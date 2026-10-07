@@ -17,6 +17,7 @@
 
     <title>Contact | PerryHub</title>
 
+
     <!-- =========================================
          FAVICON
     ========================================== -->
@@ -230,7 +231,6 @@
                         id="contactForm"
                     >
 
-
                         <!-- NAME -->
 
                         <div class="form-group">
@@ -245,6 +245,7 @@
                                 name="name"
                                 placeholder="Your name"
                                 autocomplete="name"
+                                maxlength="100"
                                 required
                             >
 
@@ -265,6 +266,7 @@
                                 name="email"
                                 placeholder="you@example.com"
                                 autocomplete="email"
+                                maxlength="255"
                                 required
                             >
 
@@ -284,6 +286,7 @@
                                 id="subject"
                                 name="subject"
                                 placeholder="What would you like to discuss?"
+                                maxlength="200"
                                 required
                             >
 
@@ -303,10 +306,21 @@
                                 name="message"
                                 rows="7"
                                 placeholder="Write your message here..."
+                                maxlength="5000"
                                 required
                             ></textarea>
 
                         </div>
+
+
+                        <!-- STATUS MESSAGE -->
+
+                        <div
+                            id="formStatus"
+                            class="form-status"
+                            role="status"
+                            aria-live="polite"
+                        ></div>
 
 
                         <!-- SUBMIT BUTTON -->
@@ -314,6 +328,7 @@
                         <button
                             type="submit"
                             class="contact-submit"
+                            id="contactSubmit"
                         >
                             Send Message
                         </button>
@@ -371,9 +386,6 @@
 
         <div class="small-footer-inner">
 
-
-            <!-- FOOTER LOGO -->
-
             <div class="small-footer-logo">
 
                 <a href="../index.html">
@@ -382,8 +394,6 @@
 
             </div>
 
-
-            <!-- FOOTER NAVIGATION -->
 
             <nav class="small-footer-links">
 
@@ -417,12 +427,9 @@
             </nav>
 
 
-            <!-- COPYRIGHT -->
-
             <p>
                 © 2026 PerryHub. All rights reserved.
             </p>
-
 
         </div>
 
@@ -430,11 +437,12 @@
 
 
     <!-- =========================================
-         JAVASCRIPT
+         GENERAL JAVASCRIPT
     ========================================== -->
 
-    <script src="../js/script.js"></script>
-
+   <script src="../js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/contact.js"></script>
 </body>
 
 </html>
