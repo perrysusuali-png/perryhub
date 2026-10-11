@@ -1,0 +1,165 @@
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("advertiseMenuToggle");
+    const navigation = document.getElementById("advertiseNav");
+    const yearElement = document.getElementById("advertiseYear");
+    const packageSelect =
+        document.getElementById("advertisePackage") ||
+        document.getElementById("advertiseOption");
+    const enquiryForm = document.getElementById("advertiseForm");
+    const statusElement = document.getElementById("advertiseFormStatus");
+    const submitButton = document.getElementById("advertiseSubmit");
+
+    const SUPABASE_URL = "https://htxjxjgwecklicurpdtw.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_2y48kCZHxaHeTFvSLiO9mw_Vu233CcT";
+
+    const supabaseClient =
+        window.supabase &&
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener("click", () => {
+            const isOpen = navigation.classList.toggle("is-open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation" : "Open navigation"
+            );
+        });
+
+        navigation.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                navigation.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            });
+        });
+    }
+
+    document.querySelectorAll(
+        "[data-advertise-package], .advertise-select-option"
+    ).forEach((button) => {
+        button.addEventListener("click", () => {
+            const selectedPackage =
+                button.getAttribute("data-advertise-package") ||
+                button.dataset.option;
+
+            if (packageSelect && selectedPackage) {
+                packageSelect.value = selectedPackage;
+                packageSelect.dispatchEvent(
+                    new Event("change", { bubbles: true })
+                );
+            }
+
+            document.getElementById("advertise-contact")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+            window.setTimeout(() => {
+                document.getElementById("advertiseName")?.focus({
+                    preventScroll: true
+                });
+            }, 450);
+        });
+    });
+
+    if (!enquiryForm || !statusElement) {
+        return;
+    }
+
+    enquiryForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!enquiryForm.reportValidity()) {
+            return;
+        }
+
+        if (!supabaseClient) {
+            statusElement.className = "advertise-form-status error";
+            statusElement.textContent =
+                "The enquiry service could not load. Please try again later.";
+            return;
+        }
+
+        const getValue = (id) =>
+            document.getElementById(id)?.value.trim() || "";
+
+        const name = getValue("advertiseName");
+        const email = getValue("advertiseEmail");
+        const business = getValue("advertiseBusiness");
+        const option = getValue("advertiseOption") ||
+            getValue("advertisePackage");
+        const budget = getValue("advertiseBudget");
+        const message = getValue("advertiseMessage");
+
+        if (!name || !email || !message) {
+            statusElement.className = "advertise-form-status error";
+            statusElement.textContent =
+                "Please complete your name, email address, and message.";
+            return;
+        }
+
+        const originalButtonText = submitButton
+            ? submitButton.textContent
+            : "";
+
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+        }
+
+        statusElement.className = "advertise-form-status";
+        statusElement.textContent = "Submitting your enquiry...";
+
+        try {
+            const { error } = await supabaseClient
+                .from("contact_messages")
+                .insert([
+                    {
+                        name,
+                        email,
+                        subject: "PerryHub Advertising Enquiry",
+                        message: [
+                            "Advertising enquiry",
+                            `Business: ${business || "Not provided"}`,
+                            `Advertising option: ${option || "Not selected"}`,
+                            `Budget: ${budget || "Not provided"}`,
+                            "",
+                            message
+                        ].join("\n")
+                    }
+                ]);
+
+            if (error) {
+                throw error;
+            }
+
+            statusElement.className = "advertise-form-status success";
+            statusElement.textContent =
+                "Your advertising enquiry has been sent successfully. Thank you for contacting PerryHub.";
+
+            enquiryForm.reset();
+        } catch (error) {
+            console.error("Advertising enquiry submission failed:", error);
+
+            statusElement.className = "advertise-form-status error";
+            statusElement.textContent =
+                "We couldn't send your enquiry. Please try again or use the Contact page.";
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        }
+    });
+});
